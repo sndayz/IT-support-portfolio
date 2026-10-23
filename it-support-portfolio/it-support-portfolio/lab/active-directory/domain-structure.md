@@ -30,7 +30,7 @@ lab.local
 │  ├─ Finance
 │  ├─ HR
 │  ├─ IT
-│  └─ Disabled Accounts
+├─ Disabled Accounts
 ├─ Domain Controllers
 ├─ Groups
 │  ├─ Roles (GG)
@@ -47,7 +47,7 @@ lab.local
 | OU                        | Policy                                                        | Delegation                                          | Housekeeping | Notes                                                                                 |
 | ------------------------- | ------------------------------------------------------------- | --------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------- |
 | Staff / Finance, HR, IT   | Per-department user settings (desktop config, drive mappings) | A department admin could manage one department only | Yes          | Holds user accounts only                                                              |
-| Staff / Disabled Accounts | A restrictive policy could apply to offboarded accounts       |                                                     | Yes          | Keeps live OUs clean; inherits anything linked to Domain Users                        |
+| Disabled Accounts | A restrictive policy could apply to offboarded accounts       |                                                     | Yes          | Keeps live OUs clean                       |
 | Domain Controllers        | Default Domain Controllers Policy                             |                                                     |              | Built-in, left untouched                                                              |
 | Groups / Roles (GG)       |                                                               | Group management can be delegated separately        | Yes          | Global groups: roles such as HR staff                                                 |
 | Groups / Access (DL)      |                                                               | Group management can be delegated separately        | Yes          | Domain local groups placed on resource ACLs                                           |
@@ -67,12 +67,12 @@ lab.local
 ### What it makes harder
 
 - **Computer policies per department.** "Block USB on Finance PCs" cannot be done by OU, because computers are not grouped by department. Options: security group filtering on the GPO, or adding a department level under Workstations later.
-- **Inheritance into child OUs.** Anything linked to Domain Users reaches Disabled Accounts, and anything linked to Workstations reaches Staging.
+- **Inheritance into child OUs.** Anything linked to Workstations reaches Staging.
 
 ### Open questions and decisions
 
 - **Placement of Staging.** Under Workstations it inherits the workstation baseline. TODO: keep it there (new machines get the baseline immediately) or move it out (new machines get no policy until configured), and why.
-- **Placement of Disabled Accounts.** TODO: keep it under Domain Users, or move it to the top level, and why.
+  
 ## Groups and permissions
 
 Access follows the **AGDLP** model: Accounts go into Global groups, Global groups go into Domain Local groups, and Domain Local groups receive the Permissions.
